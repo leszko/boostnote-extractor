@@ -8,12 +8,22 @@ import (
 )
 
 func main() {
-	input := "notes/"
-	output := "output/"
-	fmt.Println("Extracting Boost Note *.json files from", input, "into", output)
+	input := "notes"
+	output := "output"
+	fmt.Printf("Extracting Boost Note *.json files from directory '%v' into directory '%v'...\n\n", input, output)
 
-	note := read(fmt.Sprintf("%v/note.json", input))
-	note.Write(output)
+	files, err := os.ReadDir(input)
+	if err != nil {
+		fmt.Println("Error:", err)
+		os.Exit(1)
+	}
+
+	for _, file := range files {
+		filename := fmt.Sprintf("%v/%v", input, file.Name())
+		fmt.Println("Reading", filename)
+		note := read(filename)
+		note.Write(output)
+	}
 }
 
 type Note struct {
