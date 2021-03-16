@@ -12,8 +12,8 @@ func main() {
 	output := "output/"
 	fmt.Println("Extracting Boost Note *.json files from", input, "into", output)
 
-	note := read("notes/note.json")
-	note.Write("output/")
+	note := read(fmt.Sprintf("%v/note.json", input))
+	note.Write(output)
 }
 
 type Note struct {
